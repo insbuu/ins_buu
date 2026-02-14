@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Buu 💙</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins', sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background:linear-gradient(135deg, #e0f2ff, #0077ff);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  color:white;
+}
+
+.container{
+  z-index:2;
+  max-width:500px;
+  padding:20px;
+}
+
+h1{
+  font-family:'Dancing Script', cursive;
+  font-size:2.8rem;
+}
+
+.subtitle{
+  margin-top:15px;
+  font-style:italic;
+  opacity:0.95;
+}
+
+.closing{
+  margin-top:20px;
+  font-size:0.9rem;
+}
+
+.bear{
+  font-size:3rem;
+  animation:bounce 1.5s infinite;
+}
+
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-15px);}
+}
+
+.buttons{
+  margin-top:30px;
+  display:flex;
+  justify-content:center;
+  gap:40px;
+}
+
+button{
+  padding:12px 28px;
+  font-size:1rem;
+  border:none;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.yes{
+  background:linear-gradient(45deg,#0066ff,#00c6ff);
+  color:#fff;
+  border-radius:50px;
+  box-shadow:0 0 15px #00c6ff;
+}
+
+.yes:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 25px #00c6ff;
+}
+
+.no{
+  background:#fff;
+  color:#0066ff;
+  border:2px solid #0066ff;
+  border-radius:50px;
+  position:relative;
+}
+
+.heart{
+  position:fixed;
+  bottom:-10px;
+  animation:float linear infinite;
+}
+
+@keyframes float{
+  to{
+    transform:translateY(-110vh);
+    opacity:0;
+  }
+}
+
+.celebration{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#0077ff,#001f4d);
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:5;
+  text-align:center;
+}
+
+.celebration h2{
+  font-size:3rem;
+  animation:pulse 1s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+.gif{
+  margin-top:20px;
+  width:220px;
+  border-radius:20px;
+  box-shadow:0 0 20px rgba(255,255,255,0.6);
+}
+
+.confetti{
+  position:fixed;
+  width:8px;
+  height:8px;
+  top:-10px;
+  animation:confettiFall 3s linear forwards;
+}
+
+@keyframes confettiFall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="main">
+  <div class="bear">🧸</div>
+  <h1>Will You Be My Valentine, Buu? 💙</h1>
+  <div class="subtitle">
+    I love you Buu... I want to spend every sunset, every laugh, and a whole lifetime with you 💎🤍
+  </div>
+  <div class="closing">
+    Every love story is beautiful, but ours is my favourite 🤍
+  </div>
+  <div class="buttons">
+    <button class="yes" onclick="celebrate()">Yes 💘</button>
+    <button class="no" id="noBtn">No</button>
+  </div>
+</div>
+
+<div class="celebration" id="celebration">
+  <h2>YAAAYYYYY!! 💙🎉</h2>
+  <img class="gif" src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif" alt="Yay Dance">
+  <p style="margin-top:15px;">
+    Cheers to the lifetime I have for loving you 🤍💙
+  </p>
+</div>
+
+<script>
+const messages=[
+"Nope, not an option!",
+"Try again!",
+"You sure about that?",
+"Not happening!",
+"Think again!"
+];
+
+const noBtn=document.getElementById("noBtn");
+let count=0;
+
+noBtn.addEventListener("click",()=>{
+  const yesBtn=document.querySelector(".yes");
+  const yesRect=yesBtn.getBoundingClientRect();
+  let x,y;
+  do{
+    x=Math.random()*(window.innerWidth-100);
+    y=Math.random()*(window.innerHeight-50);
+  }while(
+    x>yesRect.left-100 && x<yesRect.right+100 &&
+    y>yesRect.top-50 && y<yesRect.bottom+50
+  );
+  noBtn.style.position="fixed";
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+  noBtn.textContent=messages[count%messages.length];
+  count++;
+});
+
+function createHearts(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.textContent=["🤍","💙"][Math.floor(Math.random()*2)];
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(Math.random()*20+15)+"px";
+  heart.style.animationDuration=(Math.random()*3+3)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+
+let heartInterval=setInterval(createHearts,400);
+
+function celebrate(){
+  document.getElementById("main").style.display="none";
+  clearInterval(heartInterval);
+  document.querySelectorAll(".heart").forEach(h=>h.remove());
+  const celebration=document.getElementById("celebration");
+  celebration.style.display="flex";
+
+  for(let i=0;i<120;i++){
+    const conf=document.createElement("div");
+    conf.className="confetti";
+    conf.style.left=Math.random()*100+"vw";
+    conf.style.background=["white","#00c6ff","#0077ff","#cce6ff"][Math.floor(Math.random()*4)];
+    conf.style.animationDuration=(Math.random()*2+2)+"s";
+    document.body.appendChild(conf);
+    setTimeout(()=>conf.remove(),4000);
+  }
+}
+</script>
+
+</body>
+</html>
